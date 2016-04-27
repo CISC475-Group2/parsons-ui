@@ -3,13 +3,32 @@ const data = {
   "blocks": [["+(", "<nt>22", ", ", "<nt>", ")"], ["2"], ["3"], ["2"]]
 }
 
+/*
+let state = {
+    blocks: [
+        {
+            blockId: 1,
+            isBaseBlock: true,
+            isNonTerminal: false,
+            blocks: [
+                {
+
+                }
+            ]
+        },
+        {
+            blockId: 2,
+        }
+    ]
+}
+*/
 let observer = null;
 
 function emitChange() {
     observer(data);
 }
 
-export function moveBlock(sourceBlockIndex, sourceInnerBlockIndex, sourceIsBaseBlock, targetBlockIndex, targetInnerBlockTarget, targetIsBaseBlock) {
+export function moveBlock(sourceBlockIndex, sourceInnerBlockIndex, sourceIsBaseBlock, targetBlockIndex, targetInnerBlockIndex, targetIsBaseBlock) {
     console.log(arguments)
 
     // If the source block is an inner block
@@ -17,6 +36,8 @@ export function moveBlock(sourceBlockIndex, sourceInnerBlockIndex, sourceIsBaseB
     } else {
         // Remove the source block from data
         const sourceBlockText = data.blocks.splice(sourceBlockIndex, 1)[0]
+        // Move old block to new location
+        data.blocks[targetBlockIndex][targetInnerBlockIndex] = "<nt>" + sourceBlockText
     }
     emitChange();
 }
