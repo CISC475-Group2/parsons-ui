@@ -1,0 +1,30 @@
+html {
+  font-family: courier;
+}
+
+.block {
+  font-size: 1.5rem;
+  color: #555;
+  background: #EFEFEF;
+  border: 1px solid black;
+  border-radius: 6px;
+  display: inline-block;
+  padding: 10px 20px 10px 20px;
+  margin: 0 5px 0 5px;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.non-terminal {
+  display: inline-block;
+  background: white;
+  width: 30px;
+  height: 20px;
+  border: 1px dotted #666;
+  border-radius: 4px;
+}
