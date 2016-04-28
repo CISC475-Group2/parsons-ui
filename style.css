@@ -4,13 +4,13 @@ html {
 
 .block {
   font-size: 1.5rem;
-  color: #555;
-  background: #EFEFEF;
-  border: 1px solid black;
-  border-radius: 6px;
+  color: #2C3E50;
+  background-color: #EEE;
+  text-align: center;
+  border: 1px solid white;
   display: inline-block;
-  padding: 10px 20px 10px 20px;
   margin: 0 5px 0 5px;
+  padding: 10px 20px 10px 20px;
   cursor: pointer;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -20,11 +20,16 @@ html {
   user-select: none;
 }
 
+.block * {
+    vertical-align: middle;
+}
+
+.has-non-terminals {
+    background-color: #3498DB;
+}
 .non-terminal {
   display: inline-block;
   background: white;
   width: 30px;
-  height: 20px;
-  border: 1px dotted #666;
-  border-radius: 4px;
+  height: 30px;
 }

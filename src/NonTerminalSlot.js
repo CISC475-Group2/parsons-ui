@@ -21,6 +21,7 @@ function collect(connect, monitor) {
 export default class NonTerminalSlot extends Component {
     render() {
         const { connectDropTarget, isOver, block } = this.props
+        const child = block.child
         let style = {}
 
         if (isOver) {
@@ -29,17 +30,10 @@ export default class NonTerminalSlot extends Component {
             }
         }
 
-        let children = this.props.block.children.map(b => {
-            return <Block id={b.id} block={b} />
-        })
+        return child ?
+            <span><Block id={child.id} block={child} /></span> :
+            connectDropTarget(<span style={style} className="non-terminal"></span>)
 
-        let ntComponent = (() => {
-            return children.length ?
-                <span> {children} </span> :
-                <span style={style} className="non-terminal"></span>
-        })()
-
-        return connectDropTarget(ntComponent)
     }
 };
 

@@ -21,21 +21,27 @@ function collect(connect, monitor) {
 export default class Block extends Component {
     render() {
     const { connectDragSource, isDragging, block } = this.props;
+    let hasNonTerminals = false
 
-    let blockStuff = block.children.map((c) => {
-        switch (c.type) {
-            case 'NON_TERMINAL':
-                return <NonTerminalSlot id={c.id} block={c} />
-            case 'TEXT':
-                return <span>{c.text}</span>
-
-        }
-    });
+    let blockStuff = {}
+    if (block.type === 'NON_TERMINAL') {
+        blockStuff = <NonTerminalSlot id={block.id} block={block} />
+    } else {
+        blockStuff = block.children.map((c) => {
+            switch (c.type) {
+                case 'NON_TERMINAL':
+                    hasNonTerminals = true
+                    return <NonTerminalSlot id={c.id} block={c} />
+                case 'TEXT':
+                    return <span>{c.text}</span>
+            }
+        });
+    }
 
     return connectDragSource(
         <div
             key={this.props.id}
-            className="block"
+            className={hasNonTerminals ? "block has-non-terminals" : "block"}
             style={{
                 opacity: isDragging ? 0.5 : 1
             }}

@@ -1,51 +1,60 @@
+import IdTracker from './IdTracker'
+
 const ntRegex = /<nt>/g
 const ntClosingRegex = /<\/nt>/g
 
-class IdTracker {
-    constructor() {
-        this.id = 0
-    }
-    generateUniqueId() {
-        const oldId = this.id
-        this.id = this.id + 1
-        return oldId
-    }
-}
-
-function createBlock(idTracker, type, draggable, children) {
+function createTerminalBlock(idTracker, draggable, blocksData) {
     return {
         id: idTracker.generateUniqueId(),
-        type: type,
+        type: 'TERMINAL',
         draggable: draggable,
-        children: children
+        children: blocksData.map(block => {
+            if (block === "<nt>") {
+                return createNonTerminalBlock(idTracker, false, [])
+            } else {
+                return  {
+                    type: 'TEXT',
+                    text: block
+                }
+            }
+        })
     }
 }
 
+function createNonTerminalBlock(idTracker, child=null) {
+    return {
+        id: idTracker.generateUniqueId(),
+        type: 'NON_TERMINAL',
+        draggable: false,
+        child: child
+    }
+}
 function createComponentsFromBlocksArray(idTracker, arr) {
-    return arr.map(block => {
-        if (block === "<nt>") {
-            return createBlock(idTracker, 'NON_TERMINAL', false, [])
-        } else {
-            return  {
-                type: 'TEXT',
-                text: block[0]
-            }
-        }
-    })
 }
 
 function findBlockById(blocks, id, willDelete=false) {
     var ret = -1
     for (var i = 0; i < blocks.length; i++) {
         var b = blocks[i]
-        if (b.id === id) {
+        // If we find the non terminal holding our id block
+        if (b.type === 'NON_TERMINAL' && b.child && b.child.id === id) {
+            ret = b.child
+            if (willDelete) {
+                b.child = null
+            }
+
+            return ret
+        }
+        // If we find the actual block
+        else if (b.id === id) {
             if (willDelete) {
                 blocks.splice(i, 1)
             }
             ret = b
             return ret
-        } else if (b.children && b.children.length && typeof b.children === "object") {
-            ret = findBlockById(b.children, id)
+        }
+        else if (b.children && b.children.length && typeof b.children === "object") {
+            ret = findBlockById(b.children, id, willDelete)
             if (ret.id === id) {
                 return ret
             }
@@ -61,21 +70,32 @@ function deleteBlockById(blocks, id) {
 
 // Returns the new state after moving a block.
 export function moveBlock(state, sourceId, targetId) {
-    console.log("Moving " + sourceId + " to children of " + targetId)
-    let newState = state
-    let sourceBlock = deleteBlockById(newState.blocks, sourceId)
-    let targetBlock = findBlockById(newState.blocks, targetId)
-    targetBlock.children.push(sourceBlock)
+    if (sourceId === targetId) {
+        console.log("Can't drag into oneself!")
+        return state
+    }
 
+    let newState = state
+    let targetBlock = findBlockById(newState.blocks, targetId)
+
+    if (targetBlock.type !== "NON_TERMINAL") {
+        console.log("Can't drag into a terminal!")
+        return state
+    }
+
+    console.log("Moving " + sourceId + " to children of " + targetId)
+    let sourceBlock = deleteBlockById(newState.blocks, sourceId)
+
+    targetBlock.child = sourceBlock
     return newState
 }
 
 export function initialState(data) {
     let state = { blocks: [] }
     let idTracker = new IdTracker()
-    state.blocks.push(createBlock(idTracker, 'TERMINAL', false, createComponentsFromBlocksArray(idTracker, data.base_block)))
+    state.blocks.push(createTerminalBlock(idTracker, false, data.base_block))
     state.blocks = state.blocks.concat(data.blocks.map(block => {
-        return createBlock(idTracker, 'TERMINAL', true, createComponentsFromBlocksArray(idTracker, block))
+        return createTerminalBlock(idTracker, true, block)
     }))
 
     state.getBaseBlock = () => {
