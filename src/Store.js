@@ -1,4 +1,4 @@
-import { initialState, moveBlock } from './BlockState'
+import { initialState, moveBlock } from './StateManager'
 
 const initialData = {
   "base_block": ["-(", "<nt>", ", ", "<nt>", ")"],
