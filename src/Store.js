@@ -1,34 +1,12 @@
-const data = {
-  "base_block": ["-(", "<nt>", ", ", "<nt>", ")"],
-  "blocks": [["+(", "<nt>22", ", ", "<nt>", ")"], ["2"], ["3"], ["2"]]
-}
+const initialData = ["-(<nt></nt>, <nt></nt>)", "+(<nt></nt>, <nt></nt>)", "2", "3", "2"];
 
-/*
-let state = {
-    blocks: [
-        {
-            blockId: 1,
-            isBaseBlock: true,
-            isNonTerminal: false,
-            blocks: [
-                {
-
-                }
-            ]
-        },
-        {
-            blockId: 2,
-        }
-    ]
-}
-*/
 let observer = null;
 
 function emitChange() {
     observer(data);
 }
 
-export function moveBlock(sourceBlockIndex, sourceInnerBlockIndex, sourceIsBaseBlock, targetBlockIndex, targetInnerBlockIndex, targetIsBaseBlock) {
+export function moveBlock(sourceBlockIndex, targetBlockIndex, targetNtIndex) {
     console.log(arguments)
 
     // If the source block is an inner block
