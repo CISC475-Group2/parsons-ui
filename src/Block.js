@@ -6,9 +6,7 @@ import { DragSource } from 'react-dnd';
 const blockSource = {
     beginDrag(props) {
         return {
-            blockIndex: props.blockIndex,
-            innerBlockIndex: props.innerBlockIndex,
-            isBaseBlock: props.isBaseBlock
+            id: props.id
         }
     }
 }
@@ -22,40 +20,27 @@ function collect(connect, monitor) {
 
 export default class Block extends Component {
     render() {
+    const { connectDragSource, isDragging, block } = this.props;
 
-    const { connectDragSource, isDragging, block, blockIndex, ntDelim, isBaseBlock } = this.props;
+    let blockStuff = block.children.map((c) => {
+        switch (c.type) {
+            case 'NON_TERMINAL':
+                return <NonTerminalSlot id={c.id} block={c} />
+            case 'TEXT':
+                return <span>{c.text}</span>
 
-    let innerBlockIndex = -1;
-    let delimitedBlock = block.map((s) => {
-        innerBlockIndex++
-        if (s === ntDelim) {
-            return <NonTerminalSlot
-                       innerBlockIndex={innerBlockIndex}
-                       blockIndex={blockIndex}
-                       isBaseBlock={isBaseBlock} />
-        } else if (s.slice(0, ntDelim.length) === ntDelim) {
-            return <Block
-                       block={[s.slice(ntDelim.length, s.length)]}
-                       innerBlockIndex={innerBlockIndex}
-                       blockIndex={blockIndex}
-                       isBaseBlock={isBaseBlock}
-                       ntDelim={ntDelim}
-                       connectDragSource={connectDragSource}
-                       isDragging={isDragging} />
-        } else {
-            return <span>{s}</span>
         }
     });
 
     return connectDragSource(
         <div
-            key={this.props.blockIndex}
+            key={this.props.id}
             className="block"
             style={{
                 opacity: isDragging ? 0.5 : 1
             }}
             >
-            {delimitedBlock}
+            {blockStuff}
         </div>
     );
     }

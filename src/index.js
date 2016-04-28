@@ -5,12 +5,12 @@ import { observe } from './Store';
 
 const delimiter = "<nt>"
 
-observe(data =>
+observe(data => {
     ReactDOM.render(
         <Problem
-            baseBlock={data.base_block}
-            blocks={data.blocks}
-            ntDelim={delimiter}/>,
+            baseBlock={data.getBaseBlock()}
+            blocks={data.getBlocks()} />,
         document.getElementById('root')
     )
+}
 );

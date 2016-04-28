@@ -11,9 +11,9 @@ class Problem extends Component {
     return (
       <div>
         <h1>Problem 4</h1>
-        <BaseBlock key={0} block={this.props.baseBlock} ntDelim={this.props.ntDelim}/>
+        <BaseBlock block={this.props.baseBlock} />
         <h3>Available Blocks</h3>
-        <BlockList blocks={this.props.blocks} ntDelim={this.props.ntDelim}/>
+        <BlockList blocks={this.props.blocks} />
       </div>
     );
   }
