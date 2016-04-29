@@ -4,6 +4,7 @@ import Block from './Block';
 import BaseBlock from './BaseBlock';
 import BlockList from './BlockList';
 import { DragDropContext } from 'react-dnd';
+import { getBaseBlockStr } from './Store'
 import HTML5Backend from 'react-dnd-html5-backend';
 
 class Problem extends Component {
@@ -11,6 +12,7 @@ class Problem extends Component {
     return (
       <div>
         <h1>Problem 4</h1>
+        { getBaseBlockStr() }
         <BaseBlock block={this.props.baseBlock} />
         <div className="available-blocks-space">
             <h3>Available Blocks</h3>

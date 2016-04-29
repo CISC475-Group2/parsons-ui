@@ -57,6 +57,20 @@ function deleteBlockById(blocks, id) {
     return findBlockById(blocks, id, true)
 }
 
+export function blockToStr(block) {
+    return block.children.reduce((str, curr) => {
+        if (curr.children && curr.children.length > 0) {
+            return str + blockToStr(curr)
+        } else {
+            if (curr.type === "NON_TERMINAL") {
+                return str + "<nt>"
+            } else {
+                return str + curr.text
+            }
+        }
+    }, "")
+}
+
 // Returns the new state after moving a block.
 export function moveBlock(state, sourceId, targetId) {
 

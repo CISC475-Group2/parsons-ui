@@ -1,4 +1,4 @@
-import { initialState, moveBlock } from './StateManager'
+import { initialState, moveBlock, blockToStr } from './StateManager'
 
 const initialData = {
   "base_block": ["-(", "<nt>", ", ", "<nt>", ")"],
@@ -15,6 +15,12 @@ function emitChange() {
 export function dragAndDropBlock(sourceId, targetId) {
     state = moveBlock(state, sourceId, targetId)
     emitChange();
+}
+
+export function getBaseBlockStr() {
+    let str = blockToStr(state.blocks[0])
+    console.log(str)
+    return str
 }
 
 export function observe(o) {

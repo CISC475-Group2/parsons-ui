@@ -32,6 +32,7 @@ html {
 .non-terminal {
     display: inline-block;
     background: white;
+    border-radius: 3px;
     width: 30px;
     height: 30px;
 }

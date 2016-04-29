@@ -6,6 +6,7 @@ import { observe } from './Store';
 const delimiter = "<nt>"
 
 observe(data => {
+    console.log(data)
     ReactDOM.render(
         <Problem
             baseBlock={data.getBaseBlock()}
