@@ -66,11 +66,7 @@ export function blockToStr(block) {
             return str + blockToStr(curr)
         } else {
             if (curr.type === "NON_TERMINAL") {
-                if (str[str.length - 1] === ")") {
-                    return str + " <nt> "
-                } else {
-                    return str + "<nt> "
-                }
+                return str + "◌ "
             } else {
                 if (curr.text === "(") {
                     return str + curr.text
@@ -112,9 +108,9 @@ export function moveBlock(state, sourceId, targetId) {
 export function initialState(data) {
     let state = { blocks: [] }
     let idTracker = new IdTracker()
-    state.blocks.push(createTerminalBlock(idTracker, false, data.base_block))
+    state.blocks.push(createTerminalBlock(idTracker, false, data.blocks[0]))
 
-    state.blocks = state.blocks.concat(data.blocks.map(block => {
+    state.blocks = state.blocks.concat(data.blocks.slice(1, data.blocks.length).map(block => {
         return createTerminalBlock(idTracker, true, block)
     }))
 
