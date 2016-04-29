@@ -90,12 +90,17 @@ export function initialState(data) {
     let state = { blocks: [] }
     let idTracker = new IdTracker()
     state.blocks.push(createTerminalBlock(idTracker, false, data.base_block))
+
     state.blocks = state.blocks.concat(data.blocks.map(block => {
         return createTerminalBlock(idTracker, true, block)
     }))
 
     state.getBaseBlock = () => {
         return state.blocks[0]
+    }
+
+    state.getBaseBlockStr = () => {
+        return blockToStr(state.blocks[0])
     }
 
     state.getBlocks = () => {

@@ -9,6 +9,7 @@ observe(data => {
     console.log(data)
     ReactDOM.render(
         <Problem
+            baseBlockStr={data.getBaseBlockStr()}
             baseBlock={data.getBaseBlock()}
             blocks={data.getBlocks()} />,
         document.getElementById('root')

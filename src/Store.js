@@ -17,12 +17,6 @@ export function dragAndDropBlock(sourceId, targetId) {
     emitChange();
 }
 
-export function getBaseBlockStr() {
-    let str = blockToStr(state.blocks[0])
-    console.log(str)
-    return str
-}
-
 export function observe(o) {
     if (observer) {
         throw new Error('Multiple observers not implemented.');
