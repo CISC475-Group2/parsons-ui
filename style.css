@@ -5,7 +5,7 @@ html {
 .block {
   font-size: 1.5rem;
   color: #2C3E50;
-  background-color: #EEE;
+  background-color: #ECF0F1;
   text-align: center;
   border: 1px solid white;
   display: inline-block;
@@ -26,6 +26,12 @@ html {
 
 .has-non-terminals {
     background-color: #3498DB;
+}
+
+.available-blocks-space {
+    background-color: #ECF0F1;
+    display: inline-block;
+    padding: 20px;
 }
 .non-terminal {
   display: inline-block;

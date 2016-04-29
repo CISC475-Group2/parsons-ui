@@ -12,8 +12,10 @@ class Problem extends Component {
       <div>
         <h1>Problem 4</h1>
         <BaseBlock block={this.props.baseBlock} />
-        <h3>Available Blocks</h3>
-        <BlockList blocks={this.props.blocks} />
+        <div className="available-blocks-space">
+            <h3>Available Blocks</h3>
+            <BlockList blocks={this.props.blocks} />
+        </div>
       </div>
     );
   }

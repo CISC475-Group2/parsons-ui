@@ -13,8 +13,6 @@ function emitChange() {
 }
 
 export function dragAndDropBlock(sourceId, targetId) {
-    console.log(sourceId)
-    console.log(targetId)
     state = moveBlock(state, sourceId, targetId)
     emitChange();
 }

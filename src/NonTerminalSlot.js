@@ -21,7 +21,7 @@ function collect(connect, monitor) {
 export default class NonTerminalSlot extends Component {
     render() {
         const { connectDropTarget, isOver, block } = this.props
-        const child = block.child
+        const child = block.children[0]
         let style = {}
 
         if (isOver) {

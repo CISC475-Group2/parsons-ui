@@ -10,7 +10,7 @@ function createTerminalBlock(idTracker, draggable, blocksData) {
         draggable: draggable,
         children: blocksData.map(block => {
             if (block === "<nt>") {
-                return createNonTerminalBlock(idTracker, false, [])
+                return createNonTerminalBlock(idTracker, [])
             } else {
                 return  {
                     type: 'TEXT',
@@ -21,32 +21,21 @@ function createTerminalBlock(idTracker, draggable, blocksData) {
     }
 }
 
-function createNonTerminalBlock(idTracker, child=null) {
+function createNonTerminalBlock(idTracker, children=[]) {
     return {
         id: idTracker.generateUniqueId(),
         type: 'NON_TERMINAL',
         draggable: false,
-        child: child
+        children: children
     }
-}
-function createComponentsFromBlocksArray(idTracker, arr) {
 }
 
 function findBlockById(blocks, id, willDelete=false) {
-    var ret = -1
+    let ret = -1
     for (var i = 0; i < blocks.length; i++) {
         var b = blocks[i]
-        // If we find the non terminal holding our id block
-        if (b.type === 'NON_TERMINAL' && b.child && b.child.id === id) {
-            ret = b.child
-            if (willDelete) {
-                b.child = null
-            }
-
-            return ret
-        }
         // If we find the actual block
-        else if (b.id === id) {
+        if (b.id === id) {
             if (willDelete) {
                 blocks.splice(i, 1)
             }
@@ -70,23 +59,19 @@ function deleteBlockById(blocks, id) {
 
 // Returns the new state after moving a block.
 export function moveBlock(state, sourceId, targetId) {
-    if (sourceId === targetId) {
-        console.log("Can't drag into oneself!")
-        return state
-    }
+    console.log("Attempting to move " + sourceId + " to children of " + targetId)
 
     let newState = state
     let targetBlock = findBlockById(newState.blocks, targetId)
+    console.log(targetBlock)
 
     if (targetBlock.type !== "NON_TERMINAL") {
         console.log("Can't drag into a terminal!")
         return state
     }
 
-    console.log("Moving " + sourceId + " to children of " + targetId)
-    let sourceBlock = deleteBlockById(newState.blocks, sourceId)
-
-    targetBlock.child = sourceBlock
+    console.log('Movement successful!')
+    targetBlock.children.push(deleteBlockById(newState.blocks, sourceId))
     return newState
 }
 
