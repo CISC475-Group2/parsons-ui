@@ -77,19 +77,12 @@ export function blockToStr(block) {
                 } else if (curr.text === ")") {
                     // If there is an extra space, we remove it.
                     if (str[str.length - 1] === " ") {
-                        return str.slice(0, str.length - 1) + curr.text
-                    } else {
-                        return str + curr.text
-                    }
-                } else {
-                    console.log(str)
-                    console.log(str[str.length - 1])
-                    if (str[str.length - 1] === ")") {
-                        console.log("case a")
-                        return str + " " + curr.text
+                        return str.slice(0, str.length - 1) + curr.text + " "
                     } else {
                         return str + curr.text + " "
                     }
+                } else {
+                    return str + curr.text + " "
                 }
             }
         }
