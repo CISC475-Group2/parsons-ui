@@ -1,5 +1,7 @@
-html {
-    font-family: courier;
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro);
+
+* {
+    font-family: 'Source Code Pro';
 }
 
 .block {
@@ -7,7 +9,7 @@ html {
     color: #2C3E50;
     background-color: #ECF0F1;
     text-align: center;
-    border: 1px solid #2C3E50;
+    border: 1px solid #AAA;
     border-radius: 3px;
     display: inline-block;
     cursor: pointer;

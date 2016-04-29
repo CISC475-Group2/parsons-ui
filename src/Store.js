@@ -2,7 +2,6 @@ import { initialState, moveBlock, blockToStr } from './StateManager'
 
 // Generated from (- 2 (3 2))
 const initialData = {
-    "problem_number": "4",
     "blocks" : [["(", "<nt>", "<nt>", "<nt>", ")"], ["-"], ["2"], ["(", "<nt>", "<nt>", ")"], ["3"], ["2"]]
 }
 
