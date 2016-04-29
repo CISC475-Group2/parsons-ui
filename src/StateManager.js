@@ -4,13 +4,15 @@ const ntRegex = /<nt>/g
 const ntClosingRegex = /<\/nt>/g
 
 function createTerminalBlock(idTracker, draggable, blocksData) {
+    const id = idTracker.generateUniqueId()
+
     return {
-        id: idTracker.generateUniqueId(),
+        id: id,
         type: 'TERMINAL',
         draggable: draggable,
         children: blocksData.map(block => {
             if (block === "<nt>") {
-                return createNonTerminalBlock(idTracker, [])
+                return createNonTerminalBlock(idTracker, id, [])
             } else {
                 return  {
                     type: 'TEXT',
@@ -21,9 +23,10 @@ function createTerminalBlock(idTracker, draggable, blocksData) {
     }
 }
 
-function createNonTerminalBlock(idTracker, children=[]) {
+function createNonTerminalBlock(idTracker, parentId, children=[]) {
     return {
         id: idTracker.generateUniqueId(),
+        parentId: parentId,
         type: 'NON_TERMINAL',
         draggable: false,
         children: children
@@ -79,6 +82,11 @@ export function moveBlock(state, sourceId, targetId) {
 
     if (targetBlock.type !== "NON_TERMINAL") {
         console.log("Can't drag into a terminal!")
+        return state
+    }
+
+    if (targetBlock.parentId === sourceId) {
+        console.log("Can't drag into oneself!")
         return state
     }
 
