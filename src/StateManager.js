@@ -61,14 +61,26 @@ function deleteBlockById(blocks, id) {
 }
 
 export function blockToStr(block) {
-    return block.children.reduce((str, curr) => {
+    return block.children.reduce((str, curr, index) => {
+        console.log(str + "++")
         if (curr.children && curr.children.length > 0) {
             return str + blockToStr(curr)
         } else {
             if (curr.type === "NON_TERMINAL") {
                 return str + "<nt>"
             } else {
-                return str + curr.text
+                if (curr.text === "(") {
+                    return str + curr.text
+                } else if (curr.text === ")") {
+                    // If there is an extra space, we remove it.
+                    if (str[str.length - 1] === " ") {
+                        return str.slice(0, str.length - 1) + curr.text
+                    } else {
+                        return str + curr.text
+                    }
+                } else {
+                    return str + curr.text + " "
+                }
             }
         }
     }, "")
