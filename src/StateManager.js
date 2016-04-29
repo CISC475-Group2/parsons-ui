@@ -59,18 +59,15 @@ function deleteBlockById(blocks, id) {
 
 // Returns the new state after moving a block.
 export function moveBlock(state, sourceId, targetId) {
-    console.log("Attempting to move " + sourceId + " to children of " + targetId)
 
     let newState = state
     let targetBlock = findBlockById(newState.blocks, targetId)
-    console.log(targetBlock)
 
     if (targetBlock.type !== "NON_TERMINAL") {
         console.log("Can't drag into a terminal!")
         return state
     }
 
-    console.log('Movement successful!')
     targetBlock.children.push(deleteBlockById(newState.blocks, sourceId))
     return newState
 }
