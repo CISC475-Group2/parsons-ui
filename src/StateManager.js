@@ -62,12 +62,15 @@ function deleteBlockById(blocks, id) {
 
 export function blockToStr(block) {
     return block.children.reduce((str, curr, index) => {
-        console.log(str + "++")
         if (curr.children && curr.children.length > 0) {
             return str + blockToStr(curr)
         } else {
             if (curr.type === "NON_TERMINAL") {
-                return str + "<nt>"
+                if (str[str.length - 1] === ")") {
+                    return str + " <nt> "
+                } else {
+                    return str + "<nt> "
+                }
             } else {
                 if (curr.text === "(") {
                     return str + curr.text
@@ -79,7 +82,14 @@ export function blockToStr(block) {
                         return str + curr.text
                     }
                 } else {
-                    return str + curr.text + " "
+                    console.log(str)
+                    console.log(str[str.length - 1])
+                    if (str[str.length - 1] === ")") {
+                        console.log("case a")
+                        return str + " " + curr.text
+                    } else {
+                        return str + curr.text + " "
+                    }
                 }
             }
         }
