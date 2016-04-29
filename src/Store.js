@@ -6,23 +6,27 @@ const initialData = {
 }
 
 let state = initialState(initialData)
-let observer = null;
+let observer = null
 
 function emitChange() {
-    observer(state);
+    observer(state)
 }
 
 export function dragAndDropBlock(sourceId, targetId) {
     state = moveBlock(state, sourceId, targetId)
-    emitChange();
+    emitChange()
+}
+
+export function reset() {
+    state = initialState(initialData)
+    emitChange()
 }
 
 export function observe(o) {
     if (observer) {
-        throw new Error('Multiple observers not implemented.');
+        throw new Error('Multiple observers not implemented.')
     }
-
-    observer = o;
-    emitChange();
+    observer = o
+    emitChange()
 }
 
