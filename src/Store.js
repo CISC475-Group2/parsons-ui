@@ -22,6 +22,11 @@ export function reset() {
     emitChange()
 }
 
+export function submit() {
+    alert("Submitted!")
+    reset()
+}
+
 export function observe(o) {
     if (observer) {
         throw new Error('Multiple observers not implemented.')
