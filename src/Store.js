@@ -1,4 +1,4 @@
-import { initialState, moveBlock, blockToStr } from './StateManager'
+import { initialState, moveBlock, swapBlocks, blockToStr } from './StateManager'
 
 // Generated from (- 2 (3 2))
 const initialData = {
@@ -14,6 +14,11 @@ function emitChange() {
 
 export function dragAndDropBlock(sourceId, targetId) {
     state = moveBlock(state, sourceId, targetId)
+    emitChange()
+}
+
+export function dragAndDropSwapBlocks(sourceId, targetId) {
+    state = swapBlocks(state, sourceId, targetId)
     emitChange()
 }
 

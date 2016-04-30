@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import NonTerminalSlot from './NonTerminalSlot';
 import { ItemTypes } from './Constants';
-import { DragSource } from 'react-dnd';
+import { DragSource, DropTarget } from 'react-dnd';
+import { dragAndDropSwapBlocks } from './Store'
 
 const blockSource = {
     beginDrag(props) {
@@ -11,16 +12,33 @@ const blockSource = {
     }
 }
 
-function collect(connect, monitor) {
+const blockTarget = {
+    drop(props, monitor) {
+        if (monitor.isOver({shallow: false})) {
+            let source = monitor.getItem()
+            console.log(source.id)
+            console.log(props.id)
+            dragAndDropSwapBlocks(source.id, props.id)
+        }
+    }
+}
+
+function dragSourceCollect(connect, monitor) {
     return {
         connectDragSource: connect.dragSource(),
         isDragging: monitor.isDragging()
     }
 }
 
+function dropTargetCollect(connect, monitor) {
+    return {
+        connectDropTarget: connect.dropTarget(),
+    }
+}
+
 export default class Block extends Component {
     render() {
-        const { connectDragSource, isDragging, block } = this.props;
+        const { connectDragSource, connectDropTarget, isDragging, block } = this.props;
         let hasNonTerminals = false
 
         let blockStuff = {}
@@ -55,11 +73,11 @@ export default class Block extends Component {
             </div>
 
         if (this.props.block.draggable) {
-            return connectDragSource(blockRender)
+            return connectDragSource(connectDropTarget(blockRender))
         } else {
             return blockRender
         }
     }
 };
 
-export default DragSource(ItemTypes.BLOCK, blockSource, collect)(Block);
+export default DropTarget(ItemTypes.BLOCK, blockTarget, dropTargetCollect)(DragSource(ItemTypes.BLOCK, blockSource, dragSourceCollect)(Block));

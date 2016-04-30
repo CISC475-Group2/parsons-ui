@@ -71,7 +71,7 @@ export function blockToStr(block) {
                 if (curr.text === "(") {
                     return str + curr.text
                 } else if (curr.text === ")") {
-                    // If there is an extra space, we remove it.
+                    // If there is an extra space before the ), we remove it.
                     if (str[str.length - 1] === " ") {
                         return str.slice(0, str.length - 1) + curr.text + " "
                     } else {
@@ -82,7 +82,7 @@ export function blockToStr(block) {
                 }
             }
         }
-    }, "")
+    }, "").trim()
 }
 
 // Returns the new state after moving a block.
@@ -91,7 +91,6 @@ export function moveBlock(state, sourceId, targetId) {
 
     // If dragging into an AvailableBlocksSpace...
     if (targetId === -1) {
-        console.log("HI")
         newState.blocks.push(deleteBlockById(newState.blocks, sourceId))
         return newState
     }
@@ -109,6 +108,14 @@ export function moveBlock(state, sourceId, targetId) {
     }
 
     targetBlock.children.push(deleteBlockById(newState.blocks, sourceId))
+    return newState
+}
+
+export function swapBlocks(state, sourceId, targetId) {
+    let newState = state
+    let sourceBlock = findBlockById(newState.blocks, sourceId)
+    let targetBlock = findBlockById(newState.blocks, targetId)
+
     return newState
 }
 
