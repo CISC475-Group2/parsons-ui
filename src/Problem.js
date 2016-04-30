@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DragSource from 'react-dnd';
 import Block from './Block';
 import BlockList from './BlockList';
+import AvailableBlocksSpace from './AvailableBlocksSpace'
 import { DragDropContext } from 'react-dnd';
 import { getBaseBlockStr, reset, submit } from './Store'
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -16,9 +17,9 @@ class Problem extends Component {
                 <pre className="code-space">{this.props.baseBlockStr}</pre>
                 <pre>
                 <Block block={this.props.baseBlock} />
-                <div className="available-blocks-space">
+                <AvailableBlocksSpace>
                     <BlockList blocks={this.props.blocks} />
-                </div>
+                </AvailableBlocksSpace>
                 </pre>
                 <div className="btn-group" role="group" aria-label="...">
                     <button type="button" className="btn btn-default" onClick={reset}>Reset</button>

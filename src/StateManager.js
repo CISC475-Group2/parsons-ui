@@ -87,8 +87,15 @@ export function blockToStr(block) {
 
 // Returns the new state after moving a block.
 export function moveBlock(state, sourceId, targetId) {
-
     let newState = state
+
+    // If dragging into an AvailableBlocksSpace...
+    if (targetId === -1) {
+        console.log("HI")
+        newState.blocks.push(deleteBlockById(newState.blocks, sourceId))
+        return newState
+    }
+
     let targetBlock = findBlockById(newState.blocks, targetId)
 
     if (targetBlock.type !== "NON_TERMINAL") {
