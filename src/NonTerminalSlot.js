@@ -26,7 +26,7 @@ export default class NonTerminalSlot extends Component {
 
         if (isOver) {
             style= {
-                backgroundColor: '#5EFA6F',
+                backgroundColor: '#AEF0AF',
             }
         }
 
