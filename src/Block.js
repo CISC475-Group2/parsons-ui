@@ -38,9 +38,15 @@ export default class Block extends Component {
             });
         }
 
+        let className = "block "
+        if (hasNonTerminals)
+            className += "has-non-terminals "
+        if (block.draggable)
+            className += "draggable "
+
         let blockRender = <div
                 key={this.props.id}
-                className={hasNonTerminals ? "block has-non-terminals" : "block"}
+                className={className}
                 style={{
                     opacity: isDragging ? 0.5 : 1
                 }}

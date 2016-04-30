@@ -6,8 +6,10 @@ import { dragAndDropBlock } from './Store'
 
 const availableBlocksSpaceTarget = {
     drop(props, monitor) {
-        let source = monitor.getItem()
-        dragAndDropBlock(source.id, -1)
+        if (monitor.isOver({shallow: false})) {
+            let source = monitor.getItem()
+            dragAndDropBlock(source.id, -1)
+        }
     }
 };
 

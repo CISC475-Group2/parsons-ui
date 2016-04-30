@@ -16,16 +16,24 @@
     border: 1px solid #BBB;
     border-radius: 3px;
     display: inline-block;
-    cursor: pointer;
     padding: 5px 15px 5px 15px;
     margin: 0px 5px;
 
+    cursor: default;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.draggable {
+    cursor: pointer;
+}
+
+.draggable:hover {
+    background-color: #E9EBEB;
 }
 
 .block * {
