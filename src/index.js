@@ -1,18 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Problem from './Problem';
-import { observe } from './Store';
+import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import App from './App'
+import blockApp from './BlockReducer'
 
-const delimiter = "<nt>"
+const store = createStore(blockApp)
 
-observe(data => {
-    console.log(data)
-    ReactDOM.render(
-        <Problem
-            baseBlockStr={data.getBaseBlockStr()}
-            baseBlock={data.getBaseBlock()}
-            blocks={data.getBlocks()} />,
+function renderApp() {
+    console.log(store.getState())
+    render(
+        <Provider store={store}>
+            <App />
+        </Provider>,
         document.getElementById('root')
     )
 }
-);
+renderApp()
+store.subscribe(renderApp)
+

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import NonTerminalSlot from './NonTerminalSlot';
 import { ItemTypes } from './Constants';
 import { DragSource, DropTarget } from 'react-dnd';
-import { dragAndDropSwapBlocks } from './Store'
 
 const blockSource = {
     beginDrag(props) {
@@ -15,10 +14,7 @@ const blockSource = {
 const blockTarget = {
     drop(props, monitor) {
         if (monitor.isOver({shallow: false})) {
-            let source = monitor.getItem()
-            console.log(source.id)
-            console.log(props.id)
-            dragAndDropSwapBlocks(source.id, props.id)
+            props.onSwapBlocks(monitor.getItem().id, props.id)
         }
     }
 }
@@ -43,13 +39,19 @@ export default class Block extends Component {
 
         let blockStuff = {}
         if (block.type === 'NON_TERMINAL') {
-            blockStuff = <NonTerminalSlot id={block.id} block={block} />
+            blockStuff = <NonTerminalSlot id={block.id}
+                                          block={block}
+                                          onSwapBlocks={this.props.onSwapBlocks}
+                                          onMoveBlock={this.props.onMoveBlock} />
         } else {
             blockStuff = block.children.map((c) => {
                 switch (c.type) {
                     case 'NON_TERMINAL':
                         hasNonTerminals = true
-                        return <NonTerminalSlot id={c.id} block={c} />
+                        return <NonTerminalSlot id={c.id}
+                                                block={c}
+                                                onSwapBlocks={this.props.onSwapBlocks}
+                                                onMoveBlock={this.props.onMoveBlock} />
                     case 'TEXT':
                         return <span>{c.text}</span>
                 }

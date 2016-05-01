@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import DragSource from 'react-dnd';
+import { DragSource, DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import Block from './Block';
 import BlockList from './BlockList';
 import AvailableBlocksSpace from './AvailableBlocksSpace'
-import { DragDropContext } from 'react-dnd';
-import { getBaseBlockStr, reset, submit } from './Store'
-import HTML5Backend from 'react-dnd-html5-backend';
 
 class Problem extends Component {
     render() {
@@ -14,16 +12,20 @@ class Problem extends Component {
                 <div className="page-header">
                       <h1>Problem 4</h1>
                 </div>
-                <pre className="code-space">{this.props.baseBlockStr}</pre>
+                <pre className="code-space">{this.props.baseBlockString}</pre>
                 <pre>
-                <Block block={this.props.baseBlock} />
-                <AvailableBlocksSpace>
-                    <BlockList blocks={this.props.blocks} />
+                <Block block={this.props.baseBlock}
+                       onMoveBlock={this.props.onMoveBlock}
+                       onSwapBlocks={this.props.onSwapBlocks} />
+                <AvailableBlocksSpace onMoveBlock={this.props.onMoveBlock}>
+                    <BlockList blocks={this.props.blocks}
+                               onSwapBlocks={this.props.onSwapBlocks}
+                               onMoveBlock={this.props.onMoveBlock} />
                 </AvailableBlocksSpace>
                 </pre>
                 <div className="btn-group" role="group" aria-label="...">
-                    <button type="button" className="btn btn-default" onClick={reset}>Reset</button>
-                    <button type="button" className="btn btn-default" onClick={submit}>Submit</button>
+                    <button type="button" className="btn btn-default" onClick={this.props.onReset.bind(this)}>Reset</button>
+                    <button type="button" className="btn btn-default" >Submit</button>
                 </div>
             </div>
         );

@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import { ItemTypes } from './Constants'
 import { DropTarget } from 'react-dnd'
 import Block from './Block'
-import { dragAndDropBlock } from './Store'
 
 const availableBlocksSpaceTarget = {
     drop(props, monitor) {
         if (monitor.isOver({shallow: false})) {
-            let source = monitor.getItem()
-            dragAndDropBlock(source.id, -1)
+            props.onMoveBlock(monitor.getItem().id, -1)
         }
     }
 };
