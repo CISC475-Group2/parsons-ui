@@ -32,7 +32,7 @@ export default class NonTerminalSlot extends Component {
             <span><Block id={child.id}
                          block={child}
                          onMoveBlock={this.props.onMoveBlock}
-                         onSwapBlocks={this.props.onSwapBlock} /></span> :
+                         onSwapBlocks={this.props.onSwapBlocks} /></span> :
             connectDropTarget(<span style={style} className="non-terminal"></span>)
 
     }

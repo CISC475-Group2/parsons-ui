@@ -19,8 +19,8 @@ class Problem extends Component {
                        onSwapBlocks={this.props.onSwapBlocks} />
                 <AvailableBlocksSpace onMoveBlock={this.props.onMoveBlock}>
                     <BlockList blocks={this.props.blocks}
-                               onSwapBlocks={this.props.onSwapBlocks}
-                               onMoveBlock={this.props.onMoveBlock} />
+                               onMoveBlock={this.props.onMoveBlock}
+                               onSwapBlocks={this.props.onSwapBlocks} />
                 </AvailableBlocksSpace>
                 </pre>
                 <div className="btn-group" role="group" aria-label="...">
