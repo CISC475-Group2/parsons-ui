@@ -39,7 +39,8 @@ export default class Block extends Component {
 
         let blockStuff = {}
         if (block.type === 'NON_TERMINAL') {
-            blockStuff = <NonTerminalSlot id={block.id}
+            blockStuff = <NonTerminalSlot key={block.id}
+                                          id={block.id}
                                           block={block}
                                           onSwapBlocks={this.props.onSwapBlocks}
                                           onMoveBlock={this.props.onMoveBlock} />
@@ -48,12 +49,13 @@ export default class Block extends Component {
                 switch (c.type) {
                     case 'NON_TERMINAL':
                         hasNonTerminals = true
-                        return <NonTerminalSlot id={c.id}
+                        return <NonTerminalSlot key={c.id}
+                                                id={c.id}
                                                 block={c}
                                                 onSwapBlocks={this.props.onSwapBlocks}
                                                 onMoveBlock={this.props.onMoveBlock} />
                     case 'TEXT':
-                        return <span>{c.text}</span>
+                        return <span key={c.id}>{c.text}</span>
                 }
             });
         }
@@ -64,15 +66,10 @@ export default class Block extends Component {
         if (block.draggable)
             className += "draggable "
 
-        let blockRender = <div
-                key={this.props.id}
-                className={className}
-                style={{
-                    opacity: isDragging ? 0.5 : 1
-                }}
-                >
-                {blockStuff}
-            </div>
+        let blockRender = <div className={className}
+                               style={{ opacity: isDragging ? 0.5 : 1 }} >
+                               {blockStuff}
+                           </div>
 
         if (this.props.block.draggable) {
             return connectDragSource(connectDropTarget(blockRender))

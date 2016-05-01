@@ -63,6 +63,7 @@ function createTerminalBlock(idTracker, parentId, draggable, blocksData) {
                 return createNonTerminalBlock(idTracker, id, [])
             } else {
                 return  {
+                    id: idTracker.generateUniqueId(),
                     parentId: id,
                     type: 'TEXT',
                     text: block
