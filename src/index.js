@@ -8,7 +8,6 @@ import blockApp from './BlockReducer'
 const store = createStore(blockApp)
 
 function renderApp() {
-    console.log(store.getState())
     render(
         <Provider store={store}>
             <App />

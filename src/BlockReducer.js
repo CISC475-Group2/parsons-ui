@@ -5,9 +5,7 @@ const initialData = {
     "blocks" : [["(", "<nt>", "<nt>", "<nt>", ")"], ["-"], ["2"], ["(", "<nt>", "<nt>", ")"], ["3"], ["2"]]
 }
 
-const initialState = makeInitialState(initialData)
-
-export default function blockApp(state=initialState, action) {
+export default function blockApp(state=makeInitialState(initialData), action) {
     let newBlocks
     switch (action.type) {
         case 'MOVE_BLOCK':
@@ -29,7 +27,7 @@ export default function blockApp(state=initialState, action) {
         case 'SUBMIT':
             return state
         case 'RESET':
-            return initialState
+            return makeInitialState(initialData)
         default:
             return state
     }
